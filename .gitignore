@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+work_testdeps/
+startup.log
+data/app.db
+data/wallpapers/current/*
+data/wallpapers/history/*
+data/wallpapers/originals/*
+!data/wallpapers/current/.gitkeep
+!data/wallpapers/history/.gitkeep
+!data/wallpapers/originals/.gitkeep
