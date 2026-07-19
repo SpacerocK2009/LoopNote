@@ -11,6 +11,7 @@ from backend.models import NoteInput, PromptOptions
 from backend.services.image_service import import_image
 from backend.services.prompt_service import generate_prompt
 from backend.desktop.memo_overlay import clamp_to_monitor
+from backend.desktop.runtime import set_runtime
 
 
 def test_public_product_name_and_generic_prompt() -> None:
@@ -93,6 +94,27 @@ def test_overlay_settings_api() -> None:
         assert len(monitors.json()) >= 1
         assert client.post("/api/overlay/action", json={"action": "show"}).status_code == 200
         assert client.post("/api/overlay/action", json={"action": "hide"}).status_code == 200
+
+
+def test_overlay_action_is_dispatched_without_restart() -> None:
+    class RuntimeProbe:
+        def __init__(self) -> None:
+            self.commands: list[str] = []
+
+        def dispatch(self, command: str) -> None:
+            self.commands.append(command)
+
+    runtime = RuntimeProbe()
+    set_runtime(runtime)  # type: ignore[arg-type]
+    try:
+        with TestClient(app) as client:
+            shown = client.post("/api/overlay/action", json={"action": "show"})
+            assert shown.status_code == 200
+            assert shown.json()["desktop_running"] is True
+            assert runtime.commands == ["refresh"]
+            client.post("/api/overlay/action", json={"action": "hide"})
+    finally:
+        set_runtime(None)
 
 
 def test_phase3_review_candidates_and_templates() -> None:

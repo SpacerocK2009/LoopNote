@@ -1,0 +1,8 @@
+.dashboard { order: 1; }
+.editor { order: 2; }
+.overlay-panel { order: 3; }
+.backup-panel { order: 4; }
+.candidate-panel { order: 10; }
+.prompt-panel { order: 11; }
+.image-panel { order: 12; }
+.history-panel { order: 13; }
