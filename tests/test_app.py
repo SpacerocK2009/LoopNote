@@ -13,6 +13,15 @@ from backend.services.prompt_service import generate_prompt
 from backend.desktop.memo_overlay import clamp_to_monitor
 
 
+def test_public_product_name_and_generic_prompt() -> None:
+    assert app.title == "LoopNote — A Desktop Practice Companion"
+    note = NoteInput(title="Reaction drill", bullet_points="Watch the cue", goal="Ten repetitions")
+    prompt = generate_prompt(note, PromptOptions())
+    assert "Reaction drill" in prompt
+    assert "copyrighted characters" in prompt
+    assert "Street Fighter" not in prompt
+
+
 def test_prompt_preserves_note_text() -> None:
     note = NoteInput(title="対空確認", character="ジュリ", bullet_points="・2HP → 強風破\n・ダメージ 1200", goal="3回成功")
     prompt = generate_prompt(note, PromptOptions(support_style="熱血", text_position="左", theme_color="ブラック"))

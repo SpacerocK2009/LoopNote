@@ -1,0 +1,21 @@
+name: Bug report
+description: Report reproducible LoopNote behavior
+body:
+  - type: textarea
+    id: summary
+    attributes: {label: Summary}
+    validations: {required: true}
+  - type: input
+    id: environment
+    attributes: {label: Environment, placeholder: "Windows version, Python version, display scaling"}
+    validations: {required: true}
+  - type: textarea
+    id: steps
+    attributes: {label: Steps to reproduce}
+    validations: {required: true}
+  - type: textarea
+    id: expected
+    attributes: {label: Expected and actual behavior}
+    validations: {required: true}
+  - type: markdown
+    attributes: {value: "Do not attach personal notes, backups, credentials, or proprietary game assets."}
