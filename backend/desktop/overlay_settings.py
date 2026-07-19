@@ -47,9 +47,11 @@ def set_auto_start(enabled: bool) -> None:
     if os.name != "nt":
         raise RuntimeError("自動起動設定はWindowsでのみ利用できます。")
     startup = Path(os.environ["APPDATA"]) / "Microsoft" / "Windows" / "Start Menu" / "Programs" / "Startup"
-    launcher = startup / "SF6StrategyBoard.cmd"
+    launcher = startup / "LoopNote.cmd"
     if enabled:
-        start_bat = BASE_DIR / "start.bat"
-        launcher.write_text(f'@echo off\nstart "" /min "{start_bat}"\n', encoding="utf-8")
+        hidden_launcher = BASE_DIR / "launch.vbs"
+        launcher.write_text(
+            f'@echo off\nwscript.exe //B //Nologo "{hidden_launcher}" --background\n', encoding="utf-8"
+        )
     else:
         launcher.unlink(missing_ok=True)

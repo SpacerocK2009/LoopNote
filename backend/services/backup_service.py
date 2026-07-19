@@ -17,7 +17,7 @@ def create_backup() -> Path:
     initialize_database()
     BACKUP_DIR.mkdir(parents=True, exist_ok=True)
     stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    archive = BACKUP_DIR / f"sf6_strategy_backup_{stamp}.zip"
+    archive = BACKUP_DIR / f"loopnote_backup_{stamp}.zip"
     with tempfile.TemporaryDirectory() as temp:
         temp_dir = Path(temp)
         db_copy = temp_dir / "app.db"
@@ -28,7 +28,7 @@ def create_backup() -> Path:
         with db_connection() as db:
             settings = {row["key"]: json.loads(row["value"]) for row in db.execute("SELECT key,value FROM settings")}
         (temp_dir / "settings.json").write_text(json.dumps(settings, ensure_ascii=False, indent=2), encoding="utf-8")
-        (temp_dir / "README.txt").write_text("SF6 Strategy Board backup. Images are not included.\n", encoding="utf-8")
+        (temp_dir / "README.txt").write_text("LoopNote backup. Images are not included.\n", encoding="utf-8")
         with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED) as bundle:
             for file in temp_dir.iterdir(): bundle.write(file, file.name)
     return archive

@@ -4,55 +4,52 @@ from backend.models import NoteInput, PromptOptions
 
 
 def generate_prompt(note: NoteInput, options: PromptOptions) -> str:
-    bullets = note.bullet_points.strip() or "（未入力）"
-    return f"""ストリートファイター6の練習用PC壁紙画像を作成してください。
+    bullets = note.bullet_points.strip() or "Not provided"
+    return f"""Create a practical desktop wallpaper for a focused practice session.
 
-【最重要】以下の日本語テキストは省略せず、勝手に言い換えず、そのまま正確に画像内へ記載してください。技名、数字、記号、矢印も可能な限り正確に描画してください。
+IMPORTANT: Preserve the following text exactly. Do not omit or paraphrase names, numbers, symbols, or arrows.
 
-タイトル：{note.title}
-キャラクター：{note.character or '未指定'}
-カテゴリ：{note.category or '未指定'}
-練習内容：
+Title: {note.title}
+Subject: {note.character or 'Not specified'}
+Category: {note.category or 'Not specified'}
+Practice steps:
 {bullets}
-今日の目標：{note.goal or '（未入力）'}
-補足：{note.notes or '（なし）'}
-優先度：{note.priority}
+Target: {note.goal or 'Not provided'}
+Notes: {note.notes or 'None'}
+Priority: {note.priority}
 
-デザイン要件：
-- いーきゅんがプレイヤーを「{options.support_style}」スタイルで応援している
-- フルHD、16:9、1920x1080想定のPC壁紙
-- 日本語テキストを大きく、読みやすく、箇条書き中心で整理する
-- 文字配置は「{options.text_position}」を中心にする
-- テーマカラーは「{options.theme_color}」、背景は見やすいダーク系
-- 壁紙として実用的で、デスクトップアイコンを置ける十分な余白を確保する
-- いーきゅんは文字に重ならず、内容の邪魔をしない位置とサイズにする
-- 情報の優先順位が一目で分かり、練習中に素早く確認できるレイアウト
-- Street Fighter 6の熱量を感じる、洗練されたゲームトレーニングボード風
+Design requirements:
+- Tone: {options.support_style}
+- Full HD, 16:9, 1920x1080 desktop wallpaper
+- Large, readable text organized around short bullet points
+- Main text alignment: {options.text_position}
+- Theme: {options.theme_color}, with a high-contrast dark background
+- Energetic modern training-board aesthetic with abstract shapes only; no copyrighted characters, logos, or game assets
+- Leave practical space for desktop icons and keep the hierarchy readable at a glance
 
-画像内の文章を生成後に読み直し、上記テキストとの欠落・誤字・文字化けがないようにしてください。"""
+After generation, compare every rendered line with the source text and correct omissions or spelling errors."""
 
 
 def generate_candidate_prompt(notes: list[dict[str, object]], options: PromptOptions) -> str:
     sections = []
     for index, note in enumerate(notes, 1):
         sections.append(
-            f"【課題 {index}】\nタイトル：{note['title']}\nキャラクター：{note['character'] or '未指定'}\n"
-            f"カテゴリ：{note['category'] or '未指定'}\n内容：\n{note['bullet_points'] or '（未入力）'}\n"
-            f"今日の目標：{note['goal'] or '（未入力）'}"
+            f"[DRILL {index}]\nTitle: {note['title']}\nSubject: {note['character'] or 'Not specified'}\n"
+            f"Category: {note['category'] or 'Not specified'}\nSteps:\n{note['bullet_points'] or 'Not provided'}\n"
+            f"Target: {note['goal'] or 'Not provided'}"
         )
     content = "\n\n".join(sections)
-    return f"""ストリートファイター6の「今日の復習」用PC壁紙画像を作成してください。
+    return f"""Create a desktop wallpaper for today's practice review.
 
-【最重要】下記の日本語テキストを省略・言い換えせず、技名、数字、矢印を正確に記載してください。
+IMPORTANT: Preserve all text below exactly, including numbers, symbols, and arrows.
 
 {content}
 
-デザイン要件：
-- いーきゅんが「{options.support_style}」スタイルで応援する
-- フルHD、16:9、1920x1080の実用的なPC壁紙
-- 最大5課題を明確に区切り、文字配置は「{options.text_position}」中心
-- テーマカラーは「{options.theme_color}」のダーク系
-- 箇条書き中心で、デスクトップアイコン用の余白を確保
-- いーきゅんは文字を隠さない
+Design requirements:
+- Full HD, 16:9, 1920x1080 practical desktop wallpaper
+- Separate up to five drills clearly; main alignment: {options.text_position}
+- Dark {options.theme_color} theme with an energetic, modern training-board aesthetic
+- Use abstract shapes only; no copyrighted characters, logos, or game assets
+- Preserve space for desktop icons
 
-生成後に全テキストを照合し、欠落・誤字・文字化けを修正してください。"""
+Compare all rendered text with the source and correct omissions or spelling errors."""

@@ -25,7 +25,7 @@ async def lifespan(_: FastAPI):
     yield
 
 
-app = FastAPI(title="SF6 Strategy Wallpaper Tool", docs_url="/api/docs", lifespan=lifespan)
+app = FastAPI(title="LoopNote — A Desktop Practice Companion", docs_url="/api/docs", lifespan=lifespan)
 app.include_router(router)
 app.mount("/static", StaticFiles(directory=FRONTEND_DIR), name="static")
 

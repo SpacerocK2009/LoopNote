@@ -2,7 +2,7 @@
 setlocal
 chcp 65001 >nul
 cd /d "%~dp0"
-title SF6 Strategy Board
+title LoopNote
 
 set "PY_CMD="
 where py >nul 2>nul
@@ -41,9 +41,9 @@ echo Checking required libraries...
 ".venv\Scripts\python.exe" -m pip install -r requirements.txt
 if errorlevel 1 goto :install_error
 
-echo Starting SF6 Strategy Board...
+echo Starting LoopNote...
 echo Startup details are saved in startup.log if the app exits unexpectedly.
-> startup.log echo SF6 Strategy Board startup log
+> startup.log echo LoopNote startup log
 ".venv\Scripts\python.exe" app.py %* >> startup.log 2>&1
 set "APP_EXIT=%errorlevel%"
 if "%APP_EXIT%"=="0" goto :eof

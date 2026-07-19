@@ -128,6 +128,9 @@ def _upgrade_schema(db: sqlite3.Connection) -> None:
 
 def _seed_templates(db: sqlite3.Connection) -> None:
     templates = [
+        ("Reaction drill", "Reaction", "Trigger:\nResponse:\nSuccess condition:\nCommon mistake:", "Ten clean repetitions"),
+        ("Timing practice", "Timing", "Setup:\nTiming cue:\nAction:\nRecovery:", "Complete five in a row"),
+        ("Defensive response", "Defense", "Situation:\nPrimary response:\nFallback:\nReview point:", "Choose the response without hesitation"),
         ("コンボ", "コンボ", "開始条件：\n入力：\n締め：\n使う場面：\n次の起き攻め：", "安定して出せたら成功"),
         ("セットプレイ", "セットプレイ", "始動条件：\n重ねる技：\nヒット時：\nガード時：\n暴れ対応：", "状況別に迷わず選ぶ"),
         ("キャラ対策", "キャラ対策", "警戒技：\n確定反撃：\n意識ポイント：", "対戦中に1つ実行する"),
