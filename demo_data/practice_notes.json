@@ -1,0 +1,5 @@
+[
+  {"title":"Anti-air reaction practice","character":"General","category":"Reaction","bullet_points":"Watch the upper lane\nRespond only to the chosen cue\nReset immediately after each attempt","goal":"Ten successful repetitions","priority":"high","tags":"reaction,timing"},
+  {"title":"Hit-confirm practice","character":"General","category":"Timing","bullet_points":"Use a random visual cue\nContinue only after confirming it\nStop and reset after a miss","goal":"Five correct decisions in a row","priority":"medium","tags":"confirmation,focus"},
+  {"title":"Defensive response drill","character":"General","category":"Defense","bullet_points":"Recognize the pressure pattern\nChoose one safe response\nReview mistakes after the session","goal":"Respond without hesitation","priority":"high","tags":"defense,decision"}
+]
