@@ -62,6 +62,7 @@ def create_note(note: NoteInput) -> dict[str, object]:
              int(note.favorite),note.tags,note.review_status),
         )
         row = db.execute("SELECT * FROM notes WHERE id = ?", (cursor.lastrowid,)).fetchone()
+    dispatch_overlay_command("refresh")
     return _note_dict(row)
 
 
@@ -81,6 +82,7 @@ def update_note(note_id: int, note: NoteInput) -> dict[str, object]:
         if cursor.rowcount == 0:
             raise HTTPException(404, "メモが見つかりません。")
         row = db.execute("SELECT * FROM notes WHERE id = ?", (note_id,)).fetchone()
+    dispatch_overlay_command("refresh")
     return _note_dict(row)
 
 
@@ -90,6 +92,7 @@ def delete_note(note_id: int) -> dict[str, str]:
         cursor = db.execute("DELETE FROM notes WHERE id = ?", (note_id,))
     if cursor.rowcount == 0:
         raise HTTPException(404, "メモが見つかりません。")
+    dispatch_overlay_command("refresh")
     return {"message": "メモを削除しました。"}
 
 
